@@ -25,7 +25,7 @@ Angular app :
 Express app :
 - Clean Architecture
 - Restful API
-- Tests that can be launched from the container
+- Tests
 - Swagger documentation
 
 
