@@ -6,7 +6,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 
 import { Subscription, startWith } from 'rxjs';

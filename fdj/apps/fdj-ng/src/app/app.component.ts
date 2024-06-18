@@ -56,6 +56,9 @@ export class AppComponent implements OnInit, OnDestroy {
               this.router.navigate(['/']);
             }
           },
+          error: (err) => {
+            console.error(err);
+          },
         })
     );
   }
