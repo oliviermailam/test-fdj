@@ -15,6 +15,8 @@ After initialization, you should be able to see the result :
 - on your [localhost:3333/api-docs](http://localhost:3333/api-docs) for the Express app documentation.
 
 ## About the app
+MEAN stack featuring
+
 Angular app :
 - Angular (18)
 - Reactive forms
@@ -22,10 +24,12 @@ Angular app :
 - Bootstrap icons
 - Tests
 
-Express app :
+Express/Node app :
 - Clean Architecture
 - Restful API
 - Tests
 - Swagger documentation
+
+MongoDB
 
 
