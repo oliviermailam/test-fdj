@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Player } from '@fdj/entities';
-import { filter, switchMap } from 'rxjs';
+import { Player, Team } from '@fdj/entities';
+import { combineLatest, filter, switchMap, tap } from 'rxjs';
 import { FdjApiService } from '../../shared/services/fdj-api.service';
 import { CustomCurrencyPipe } from '../../pipes/customCurrency.pipe';
 
@@ -15,6 +15,7 @@ import { CustomCurrencyPipe } from '../../pipes/customCurrency.pipe';
 })
 export class TeamComponent implements OnInit {
   players: Player[] = [];
+  team?: Team;
 
   isLoading = true;
 
@@ -28,16 +29,21 @@ export class TeamComponent implements OnInit {
       .pipe(
         filter((queryParams) => queryParams['id']),
         switchMap((queryParams) =>
-          this.fdjApiService.getTeamsIdPlayers(queryParams['id'])
+          combineLatest([
+            this.fdjApiService.getTeamId(queryParams['id']),
+            this.fdjApiService.getTeamsIdPlayers(queryParams['id']),
+          ])
         )
       )
       .subscribe({
-        next: (players) => {
+        next: ([team, players]) => {
+          this.team = team;
           this.players = players;
           this.isLoading = false;
         },
         error: (err) => {
           console.log('Error: ', err);
+          this.team = undefined;
           this.players = [];
           this.isLoading = false;
         },

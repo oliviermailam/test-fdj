@@ -42,7 +42,7 @@ export class TeamsController {
      *       400:
      *         description: Invalid id
      */
-    this.router.get(`${this.path}/:ids`, this.getTeamsByIds.bind(this));
+    this.router.get(`${this.path}/ids/:ids`, this.getTeamsByIds.bind(this));
     /**
      * @swagger
      * /teams/{id}:

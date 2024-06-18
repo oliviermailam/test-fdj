@@ -1,4 +1,4 @@
-import { League, Team, Player } from '@fdj/entities';
+import { League, Team, Player, ILeague, ITeam, IPlayer } from '@fdj/entities';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -18,13 +18,13 @@ export class FdjApiService {
 
   getLeagues(): Observable<League[]> {
     return this.http
-      .get<League[]>(this.leaguesUrl())
+      .get<ILeague[]>(this.leaguesUrl())
       .pipe(map((leagues) => leagues.map((league) => new League(league))));
   }
 
   getLeagueById(id: string): Observable<League> {
     return this.http
-      .get<League>(`${this.leaguesUrl()}/${id}`)
+      .get<ILeague>(`${this.leaguesUrl()}/${id}`)
       .pipe(map((league) => new League(league)));
   }
 
@@ -34,19 +34,21 @@ export class FdjApiService {
 
   getTeamsIds(teamsIds: string[]): Observable<Team[]> {
     return this.http
-      .get<Team[]>(`${this.teamsApiUrl()}/${teamsIds.join(',')}`)
+      .get<ITeam[]>(`${this.teamsApiUrl()}/ids/${teamsIds.join(',')}`)
       .pipe(map((teams) => teams.map((team) => new Team(team))));
   }
 
   getTeamId(teamId: string): Observable<Team> {
-    return this.http
-      .get<Team>(`${this.teamsApiUrl()}/${teamId}`)
-      .pipe(map((team) => new Team(team)));
+    return this.http.get<ITeam>(`${this.teamsApiUrl()}/${teamId}`).pipe(
+      map((team) => {
+        return new Team(team);
+      })
+    );
   }
 
   getTeamsIdPlayers(teamId: string): Observable<Player[]> {
     return this.http
-      .get<Player[]>(`${this.teamsApiUrl()}/${teamId}/players`)
+      .get<IPlayer[]>(`${this.teamsApiUrl()}/${teamId}/players`)
       .pipe(map((players) => players.map((player) => new Player(player))));
   }
 
@@ -56,7 +58,7 @@ export class FdjApiService {
 
   getPlayerId(playerId: string): Observable<Player> {
     return this.http
-      .get<Player>(`${this.playersApiUrl()}/${playerId}`)
+      .get<IPlayer>(`${this.playersApiUrl()}/${playerId}`)
       .pipe(map((player) => new Player(player)));
   }
 }
