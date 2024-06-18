@@ -1,6 +1,6 @@
 <div class="league-container">
   @for (team of teams; track team) {
-    <a class="team-container" [routerLink]="['/teams']" [queryParams]="{id: team.id}">
+    <a class="team-container" [routerLink]="['/teams']" [queryParams]="{id: team.id, leagueId }">
       <img class="team-thumbnail" [src]="team.thumbnail"/>
     </a>
   }

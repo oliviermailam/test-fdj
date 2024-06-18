@@ -14,6 +14,7 @@ import { Team } from '@fdj/entities';
 })
 export class LeagueComponent implements OnInit, OnDestroy {
   teams: Team[] = [];
+  leagueId?: string;
 
   isLoading = true;
 
@@ -28,6 +29,7 @@ export class LeagueComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.activatedRoute.queryParams
         .pipe(
+          tap((queryParams) => (this.leagueId = queryParams['id'])),
           filter((queryParams) => queryParams['id']),
           switchMap((queryParams) =>
             this.fdjApiService.getLeagueById(queryParams['id'])

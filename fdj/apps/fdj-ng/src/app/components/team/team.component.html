@@ -1,3 +1,11 @@
+<div class="team-header">
+  <button class="back-button" (click)="$event.stopPropagation(); back()">
+    <span class="bi-chevron-left"></span>
+    Back
+  </button>
+  <h4>{{ team?.name }}</h4>
+</div>
+
 <div class="team-container">
   @for (player of players; track player) {
     <div class="player-card">
@@ -6,13 +14,13 @@
       <div class="player-description">
         <h4>{{ player.name }}</h4>
         <p>{{ player.position }}</p>
-        <p>birthDate:{{ player.born | date:'yyyy-MM-dd' }}</p>
+        <p>birthDate: {{ player.born | date:'yyyy-MM-dd' }}</p>
         <p>price: {{ player.signin.amount | customCurrency:player.signin.currency }}</p>
       </div>
     </div>
   }
   @empty {
-    <div>
+    <div class="no-result">
       No results
     </div>
   }
