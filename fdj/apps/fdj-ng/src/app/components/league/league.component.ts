@@ -10,7 +10,7 @@ import { Team } from '@fdj/entities';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './league.component.html',
-  styleUrl: './league.component.css',
+  styleUrl: './league.component.scss',
 })
 export class LeagueComponent implements OnInit, OnDestroy {
   teams: Team[] = [];

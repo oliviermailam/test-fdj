@@ -11,7 +11,7 @@ import { CustomCurrencyPipe } from '../../pipes/customCurrency.pipe';
   standalone: true,
   imports: [CommonModule, CustomCurrencyPipe],
   templateUrl: './team.component.html',
-  styleUrl: './team.component.css',
+  styleUrl: './team.component.scss',
 })
 export class TeamComponent implements OnInit {
   players: Player[] = [];
