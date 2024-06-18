@@ -16,7 +16,7 @@ import { SelectOption } from '../models/select-option';
 @Component({
   selector: 'app-input-select',
   templateUrl: './input-select.component.html',
-  styleUrl: './input-select.component.css',
+  styleUrl: './input-select.component.scss',
 })
 export class InputSelectComponent implements OnChanges, OnDestroy {
   @Input() placeholder: string = 'Rechercher';
