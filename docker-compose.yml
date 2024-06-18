@@ -3,22 +3,33 @@ services:
   monorepo:
     container_name: monorepo
     build:
-      context: './'
+      context: './fdj'
       dockerfile: Dockerfile
     ports:
       - 4200:4200
-      - 3000:3000
+      - 3333:3333
     volumes:
       - ./:/usr/src/app
-    tty: true
+    environment:
+      - MONGO_URI=mongodb://db:27017/sports
+    networks:
+      - fdj-network
 
   db:
     container_name: db
-    image: mongo
+    build:
+      context: './database'
+      dockerfile: Dockerfile
     ports:
       - 27017:27017
     volumes:
       - ./database:/data/
+    networks:
+      - fdj-network
 
 volumes:
   fdj-data:
+
+networks:
+  fdj-network:
+    driver: bridge

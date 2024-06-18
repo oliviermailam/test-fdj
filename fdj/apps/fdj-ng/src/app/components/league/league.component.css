@@ -1,0 +1,18 @@
+.league-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .team-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+
+    .team-thumbnail {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+    }
+  }
+
+}

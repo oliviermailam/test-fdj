@@ -1,0 +1,32 @@
+<div class="input-search">
+  <span class="search-icon bi-search"></span>
+  <input
+    type="text"
+    class="input-field"
+    autocomplete="on"
+    [placeholder]="placeholder"
+    [formControl]="searchControl"
+    (focus)="$event.stopPropagation(); showMenu(true)"
+    (keydown.enter)="$event.stopPropagation(); handleKeydownEnter()"
+  />
+
+  @if (searchControl.value) {
+    <span class="delete-icon bi-x" (click)="reset()"></span>
+  }
+
+  @if (menuOpened) {
+    <div class="menu">
+    @for (option of filteredOptions; track option) {
+      <div class="menu-item" (click)="selectOption(option)">
+        {{ option.label }}
+      </div>
+    }
+    @empty {
+      <div class="menu-item pointer-none">
+        No results
+      </div>
+    }
+    </div>
+  }
+</div>
+

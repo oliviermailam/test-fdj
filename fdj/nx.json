@@ -44,6 +44,16 @@
           "codeCoverage": true
         }
       }
+    },
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
@@ -61,6 +71,14 @@
       "options": {
         "targetName": "lint"
       }
+    },
+    {
+      "plugin": "@nx/webpack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview"
+      }
     }
   ],
   "generators": {
@@ -69,7 +87,11 @@
       "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "css"
     }
   },
-  "nxCloudAccessToken": "OTg5MmZkZWEtZjk4Yy00ZWMwLTkxZjItZDQ3YjYyMWQ3MjQxfHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "OTg5MmZkZWEtZjk4Yy00ZWMwLTkxZjItZDQ3YjYyMWQ3MjQxfHJlYWQtd3JpdGU=",
+  "defaultBase": "main"
 }
