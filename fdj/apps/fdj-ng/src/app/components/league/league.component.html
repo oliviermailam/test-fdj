@@ -1,7 +1,7 @@
 <div class="league-container">
   @for (team of teams; track team) {
     <div class="team-container">
-      <a [routerLink]="['teams', team.id]">
+      <a [routerLink]="['/', 'leagues', league.id, 'teams', team.id]">
         <img class="team-thumbnail" [src]="team.thumbnail"/>
       </a>
     </div>
