@@ -15,7 +15,15 @@ describe('LayoutComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ leagueId: '123' }),
+            snapshot: {
+              data: {
+                leagueResolver: {
+                  league: { id: '123', name: 'League' },
+                  teams: [{ id: '123', name: 'Team' }],
+                },
+              },
+            },
+            params: of({ leagueId: '123', teamId: '123' }),
           },
         },
       ],

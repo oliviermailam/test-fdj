@@ -15,7 +15,28 @@ describe('TeamComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: { params: { leagueId: '123', teamId: '234' } },
+            data: of({
+              teamResolver: {
+                league: { id: '123', name: 'League' },
+                team: { id: '234', name: 'Team' },
+                players: [
+                  {
+                    id: '345',
+                    name: 'Player',
+                    signin: { amount: 1, currency: 'eur' },
+                  },
+                ],
+              },
+            }),
+            snapshot: {
+              data: {
+                teamResolver: {
+                  league: { id: '123', name: 'League' },
+                  team: { id: '234', name: 'Team' },
+                  players: [{ id: '345', name: 'Player' }],
+                },
+              },
+            },
             params: of({ leagueId: '123', teamId: '234' }),
           },
         },
