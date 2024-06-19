@@ -1,0 +1,12 @@
+<div class="layout-container">
+  <app-input-select
+  class="input-league"
+  placeholder="Search by league"
+  [options]="leaguesOptions"
+  [formControl]="selectedLeagueIdControl">
+  </app-input-select>
+
+  <div class="full-width">
+    <router-outlet></router-outlet>
+  </div>
+</div>

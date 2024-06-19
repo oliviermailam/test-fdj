@@ -1,4 +1,3 @@
-import { FormControl } from '@angular/forms';
 import {
   Component,
   ElementRef,
@@ -7,10 +6,11 @@ import {
   OnChanges,
   OnDestroy,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { Subscription, startWith } from 'rxjs';
 
-import { SelectOption } from '../models/select-option';
+import { SelectOption } from '../../models/select-option';
 
 @Component({
   selector: 'app-input-select',
@@ -34,6 +34,15 @@ export class InputSelectComponent implements OnChanges, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = new Subscription();
+    }
+
+    if (this.formControl.value) {
+      const selectedOption = this.options.find(
+        (option) => option.value === this.formControl.value
+      );
+      if (selectedOption) {
+        this.searchControl.setValue(selectedOption.label, { emitEvent: false });
+      }
     }
 
     this.subscription.add(

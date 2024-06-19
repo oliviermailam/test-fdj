@@ -15,10 +15,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('fdj-ng');
   });
-
-  it('should have an array of leagues', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.leagues).toEqual([]);
-  });
 });

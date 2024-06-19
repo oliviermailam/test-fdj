@@ -1,14 +1,1 @@
-<div class="app-container">
-  <app-input-select
-  class="input-league"
-  placeholder="Search by league"
-  [options]="leaguesOptions"
-  [formControl]="selectedLeagueIdControl">
-  </app-input-select>
-
-  @if (selectedLeagueIdControl.value) {
-    <div class="full-width">
-      <router-outlet></router-outlet>
-    </div>
-  }
-</div>
+<router-outlet></router-outlet>

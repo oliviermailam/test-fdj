@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
-import { FdjApiService } from './services/fdj-api.service';
-import { InputSelectComponent } from './input-select/input-select.component';
 import { CustomCurrencyPipe } from '../pipes/customCurrency.pipe';
+import { InputSelectComponent } from './components/input-select/input-select.component';
+import { PlayerCardComponent } from './components/player-card/player-card.component';
+import { FdjApiService } from './services/fdj-api.service';
 
 @NgModule({
   declarations: [InputSelectComponent],
@@ -13,8 +15,10 @@ import { CustomCurrencyPipe } from '../pipes/customCurrency.pipe';
     RouterModule,
     ReactiveFormsModule,
     CustomCurrencyPipe,
+    PlayerCardComponent,
+    MatSnackBarModule,
   ],
-  exports: [InputSelectComponent],
+  exports: [InputSelectComponent, PlayerCardComponent],
   providers: [FdjApiService, CustomCurrencyPipe],
 })
 export class SharedModule {}

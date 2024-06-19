@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subscription, filter, switchMap, tap } from 'rxjs';
-import { FdjApiService } from '../../shared/services/fdj-api.service';
 import { Team } from '@fdj/entities';
+import { Subscription, catchError, filter, switchMap } from 'rxjs';
+import { FdjApiService } from '../../shared/services/fdj-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-league',
@@ -14,7 +15,7 @@ import { Team } from '@fdj/entities';
 })
 export class LeagueComponent implements OnInit, OnDestroy {
   teams: Team[] = [];
-  leagueId?: string;
+  leagueId: string;
 
   isLoading = true;
 
@@ -22,17 +23,18 @@ export class LeagueComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
-    private readonly fdjApiService: FdjApiService
-  ) {}
+    private readonly fdjApiService: FdjApiService,
+    private readonly snackBar: MatSnackBar
+  ) {
+    this.leagueId = this.activatedRoute.snapshot.params['leagueId'];
+  }
 
   ngOnInit(): void {
     this.subscription.add(
-      this.activatedRoute.queryParams
+      this.activatedRoute.params
         .pipe(
-          tap((queryParams) => (this.leagueId = queryParams['id'])),
-          filter((queryParams) => queryParams['id']),
-          switchMap((queryParams) =>
-            this.fdjApiService.getLeagueById(queryParams['id'])
+          switchMap((params) =>
+            this.fdjApiService.getLeagueById(params['leagueId'])
           ),
           filter((league) => {
             if (league.teamsIds.size === 0) {
@@ -42,7 +44,14 @@ export class LeagueComponent implements OnInit, OnDestroy {
             }
             return true;
           }),
-          switchMap((league) => this.fdjApiService.getTeamsIds(league.teams))
+          switchMap((league) => this.fdjApiService.getTeamsIds(league.teams)),
+          catchError((err) => {
+            this.snackBar.open('An error occured : ' + err.message, 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+            });
+            return [];
+          })
         )
         .subscribe({
           next: (teams) => {

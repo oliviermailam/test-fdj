@@ -15,7 +15,8 @@ describe('LeagueComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            queryParams: of({ id: '123' }),
+            snapshot: { params: { leagueId: '123', teamId: '234' } },
+            params: of({ leagueId: '123', teamId: '234' }),
           },
         },
       ],

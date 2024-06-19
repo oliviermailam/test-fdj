@@ -1,0 +1,23 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .input-league {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: fit-content;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}
+
+.snack-bar {
+  color: red;
+}

@@ -2,21 +2,24 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Player, Team } from '@fdj/entities';
-import { Subscription, combineLatest, filter, switchMap, tap } from 'rxjs';
+import { Subscription, catchError, combineLatest } from 'rxjs';
 import { FdjApiService } from '../../shared/services/fdj-api.service';
-import { CustomCurrencyPipe } from '../../pipes/customCurrency.pipe';
+import { SharedModule } from '../../shared/shared.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [CommonModule, CustomCurrencyPipe],
+  imports: [CommonModule, SharedModule],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss',
 })
 export class TeamComponent implements OnInit, OnDestroy {
   players: Player[] = [];
-  team?: Team;
-  leagueId?: string;
+  team: Team | undefined;
+
+  teamId: string;
+  leagueId: string;
 
   isLoading = true;
   private subscription = new Subscription();
@@ -24,21 +27,27 @@ export class TeamComponent implements OnInit, OnDestroy {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly fdjApiService: FdjApiService,
-    private readonly router: Router
-  ) {}
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar
+  ) {
+    this.leagueId = this.activatedRoute.snapshot.params['leagueId'];
+    this.teamId = this.activatedRoute.snapshot.params['teamId'];
+  }
 
   ngOnInit(): void {
     this.subscription.add(
-      this.activatedRoute.queryParams
+      combineLatest([
+        this.fdjApiService.getTeamId(this.teamId),
+        this.fdjApiService.getTeamsIdPlayers(this.teamId),
+      ])
         .pipe(
-          tap((queryParams) => (this.leagueId = queryParams['leagueId'])),
-          filter((queryParams) => queryParams['id']),
-          switchMap((queryParams) =>
-            combineLatest([
-              this.fdjApiService.getTeamId(queryParams['id']),
-              this.fdjApiService.getTeamsIdPlayers(queryParams['id']),
-            ])
-          )
+          catchError((err) => {
+            this.snackBar.open('An error occured : ' + err.message, 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+            });
+            return [];
+          })
         )
         .subscribe({
           next: ([team, players]) => {
@@ -47,7 +56,6 @@ export class TeamComponent implements OnInit, OnDestroy {
             this.isLoading = false;
           },
           error: (err) => {
-            console.log('Error: ', err);
             this.team = undefined;
             this.players = [];
             this.isLoading = false;
@@ -61,6 +69,6 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   back(): void {
-    this.router.navigate(['/leagues'], { queryParams: { id: this.leagueId } });
+    this.router.navigate(['/leagues', this.leagueId]);
   }
 }
