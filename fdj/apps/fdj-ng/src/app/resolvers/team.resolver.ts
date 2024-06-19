@@ -1,5 +1,4 @@
 import { inject } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResolveFn, Router } from '@angular/router';
 import { League, Player, Team } from '@fdj/entities';
 import { catchError, combineLatest, map, of, switchMap } from 'rxjs';
@@ -14,7 +13,6 @@ export interface ITeamData {
 export const teamResolver: ResolveFn<ITeamData> = (route) => {
   const fdjApiService = inject(FdjApiService);
   const router = inject(Router);
-  const snack = inject(MatSnackBar);
 
   return fdjApiService.getLeagueById(route.params['leagueId']).pipe(
     switchMap((league) => {
@@ -30,10 +28,7 @@ export const teamResolver: ResolveFn<ITeamData> = (route) => {
     }),
     map(([league, team, players]) => ({ league, team, players })),
     catchError((err) => {
-      snack.open('An error occured : ' + err.message, 'Close', {
-        duration: 5000,
-        verticalPosition: 'top',
-      });
+      window.alert('An error occured : ' + err.message);
       router.navigate(['/']);
       return [];
     })

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { League } from '@fdj/entities';
 import { Subscription, catchError, switchMap, tap } from 'rxjs';
@@ -27,8 +26,7 @@ export class LayoutComponent {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly fdjApi: FdjApiService,
-    private readonly router: Router,
-    private readonly snackBar: MatSnackBar
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,10 +54,7 @@ export class LayoutComponent {
             return this.selectedLeagueIdControl.valueChanges;
           }),
           catchError((err) => {
-            this.snackBar.open('An error occured : ' + err.message, 'Close', {
-              duration: 5000,
-              verticalPosition: 'top',
-            });
+            window.alert('An error occured : ' + err.message);
             return [];
           })
         )

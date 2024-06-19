@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { CustomCurrencyPipe } from '../pipes/customCurrency.pipe';
 import { InputSelectComponent } from './components/input-select/input-select.component';
@@ -16,7 +15,6 @@ import { FdjApiService } from './services/fdj-api.service';
     ReactiveFormsModule,
     CustomCurrencyPipe,
     PlayerCardComponent,
-    MatSnackBarModule,
   ],
   exports: [InputSelectComponent, PlayerCardComponent],
   providers: [FdjApiService, CustomCurrencyPipe],
