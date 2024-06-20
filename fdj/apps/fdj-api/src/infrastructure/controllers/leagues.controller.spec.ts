@@ -51,7 +51,8 @@ describe('LeaguesController', () => {
 
   describe('getLeagueById', () => {
     it('should call getLeagueById method from use cases with the id from request and send from response', async () => {
-      const req = { params: { id: '1' } };
+      const correctId = '5d2d058cda07b95bb8f16f80';
+      const req = { params: { id: correctId } };
       const res = {
         status: jest.fn().mockReturnValueOnce({ send: jest.fn() }),
       };
@@ -59,7 +60,7 @@ describe('LeaguesController', () => {
       await leaguesController.getLeagueById(req as any, res as any);
 
       expect(leaguesUseCases.getLeagueById).toHaveBeenCalledTimes(1);
-      expect(leaguesUseCases.getLeagueById).toHaveBeenCalledWith('1');
+      expect(leaguesUseCases.getLeagueById).toHaveBeenCalledWith(correctId);
     });
   });
 });

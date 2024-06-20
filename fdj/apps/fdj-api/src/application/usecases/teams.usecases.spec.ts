@@ -1,15 +1,20 @@
+import { PlayersRepository } from '../../infrastructure/repositories/players.repository';
 import { TeamsRepository } from '../../infrastructure/repositories/teams.repository';
 import { TeamsUseCases } from './teams.usecases';
 
+jest.mock('../../infrastructure/repositories/players.repository');
 jest.mock('../../infrastructure/repositories/teams.repository');
 
 describe('TeamsUseCases', () => {
   let teamsRepository: jest.Mocked<TeamsRepository>;
+  let playersRepository: jest.Mocked<PlayersRepository>;
   let teamsUseCases: TeamsUseCases;
 
   beforeAll(() => {
     teamsRepository = new TeamsRepository() as jest.Mocked<TeamsRepository>;
-    teamsUseCases = new TeamsUseCases(teamsRepository);
+    playersRepository =
+      new PlayersRepository() as jest.Mocked<PlayersRepository>;
+    teamsUseCases = new TeamsUseCases(teamsRepository, playersRepository);
   });
 
   it('should be defined', () => {

@@ -1,18 +1,22 @@
 import { TeamsRepository } from '../../infrastructure/repositories/teams.repository';
 import { TeamsUseCases } from '../../application/usecases/teams.usecases';
 import { TeamsController } from './teams.controller';
+import { PlayersRepository } from '../repositories/players.repository';
 
 jest.mock('../../infrastructure/repositories/teams.repository');
+jest.mock('../repositories/players.repository');
 jest.mock('../../application/usecases/teams.usecases');
 
 describe('TeamsController', () => {
   let teamsRepository: jest.Mocked<TeamsRepository>;
+  let playersRepository: jest.Mocked<PlayersRepository>;
   let teamsUseCases: jest.Mocked<TeamsUseCases>;
   let teamsController: TeamsController;
 
   beforeAll(() => {
     teamsUseCases = new TeamsUseCases(
-      teamsRepository
+      teamsRepository,
+      playersRepository
     ) as jest.Mocked<TeamsUseCases>;
     teamsController = new TeamsController(teamsUseCases);
   });
@@ -67,6 +71,22 @@ describe('TeamsController', () => {
 
       expect(teamsUseCases.getTeamById).toHaveBeenCalledTimes(1);
       expect(teamsUseCases.getTeamById).toHaveBeenCalledWith(
+        '5d2d02d7da07b95bb8f16f2a'
+      );
+    });
+  });
+
+  describe('getPlayersByTeamId', () => {
+    it('should call getPlayersByTeamId method from use cases with the id from request and send from response', async () => {
+      const req = { params: { id: '5d2d02d7da07b95bb8f16f2a' } };
+      const res = {
+        status: jest.fn().mockReturnValueOnce({ send: jest.fn() }),
+      };
+
+      await teamsController.getPlayersByTeamId(req as any, res as any);
+
+      expect(teamsUseCases.getPlayersByTeamId).toHaveBeenCalledTimes(1);
+      expect(teamsUseCases.getPlayersByTeamId).toHaveBeenCalledWith(
         '5d2d02d7da07b95bb8f16f2a'
       );
     });

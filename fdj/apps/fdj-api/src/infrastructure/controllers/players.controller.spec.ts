@@ -34,16 +34,32 @@ describe('PlayersController', () => {
   });
 
   describe('getPlayerById', () => {
-    it('should call getPlayerById method from use cases with the id from request and send from response', async () => {
-      const req = { params: { id: '1' } };
+    it('should return an error when id is not correct', async () => {
+      const invalidId = '1';
+      const req = { params: { id: invalidId } };
       const res = {
-        status: jest.fn().mockReturnValueOnce({ send: jest.fn() }),
+        status: jest.fn().mockReturnValue({ send: jest.fn() }),
+      };
+
+      await playersController.getPlayerById(req as any, res as any);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status(400).send).toHaveBeenCalledWith({
+        message: 'Invalid id',
+      });
+    });
+
+    it('should call getPlayerById method from use cases with the id from request and send from response', async () => {
+      const correctId = '5d2d058cda07b95bb8f16f80';
+      const req = { params: { id: correctId } };
+      const res = {
+        status: jest.fn().mockReturnValue({ send: jest.fn() }),
       };
 
       await playersController.getPlayerById(req as any, res as any);
 
       expect(playersUseCases.getPlayerById).toHaveBeenCalledTimes(1);
-      expect(playersUseCases.getPlayerById).toHaveBeenCalledWith('1');
+      expect(playersUseCases.getPlayerById).toHaveBeenCalledWith(correctId);
     });
   });
 });
