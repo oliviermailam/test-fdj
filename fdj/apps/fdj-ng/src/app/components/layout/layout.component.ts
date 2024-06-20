@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { League } from '@fdj/entities';
@@ -15,7 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit, OnDestroy {
   leagues: League[] = [];
 
   selectedLeagueIdControl: FormControl<string | null> = new FormControl(null);

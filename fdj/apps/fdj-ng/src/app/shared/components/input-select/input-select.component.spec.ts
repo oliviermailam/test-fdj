@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InputSelectComponent } from './input-select.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputSelectComponent } from './input-select.component';
 
 describe('InputSelectComponent', () => {
   let component: InputSelectComponent;

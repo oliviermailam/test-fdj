@@ -1,8 +1,8 @@
-import { League, Team, Player, ILeague, ITeam, IPlayer } from '@fdj/entities';
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ILeague, IPlayer, ITeam, League, Player, Team } from '@fdj/entities';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

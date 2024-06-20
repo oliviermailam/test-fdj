@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { League, Team } from '@fdj/entities';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { ILeagueData } from '../../resolvers/league.resolver';
   templateUrl: './league.component.html',
   styleUrl: './league.component.scss',
 })
-export class LeagueComponent implements OnInit {
+export class LeagueComponent implements OnInit, OnDestroy {
   teams: Team[] = [];
   league: League;
 
@@ -36,5 +36,9 @@ export class LeagueComponent implements OnInit {
         },
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
