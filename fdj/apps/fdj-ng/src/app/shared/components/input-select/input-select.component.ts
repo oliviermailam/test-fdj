@@ -50,7 +50,6 @@ export class InputSelectComponent implements OnChanges, OnDestroy {
         next: (searchValue: string | null) => {
           this.filteredOptions = this.options.filter(
             (option) =>
-              this.formControl.value ||
               !searchValue ||
               option.label.toLowerCase().includes(searchValue.toLowerCase())
           );

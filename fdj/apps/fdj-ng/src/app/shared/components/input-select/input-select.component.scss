@@ -71,6 +71,11 @@
       cursor: pointer;
     }
 
+    &.selectable {
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+
     &.pointer-none {
       cursor: default;
       pointer-events: none;

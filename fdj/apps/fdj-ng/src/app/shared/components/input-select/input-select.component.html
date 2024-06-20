@@ -8,6 +8,7 @@
     [formControl]="searchControl"
     (focus)="$event.stopPropagation(); showMenu(true)"
     (keydown.enter)="$event.stopPropagation(); handleKeydownEnter()"
+    (keydown.backspace)="$event.stopPropagation(); showMenu(true)"
   />
 
   @if (searchControl.value) {
@@ -17,7 +18,7 @@
   @if (menuOpened) {
     <div class="menu">
     @for (option of filteredOptions; track option) {
-      <div class="menu-item" (click)="selectOption(option)">
+      <div class="menu-item" [class.selectable]="filteredOptions.length === 1" (click)="selectOption(option)">
         {{ option.label }}
       </div>
     }
