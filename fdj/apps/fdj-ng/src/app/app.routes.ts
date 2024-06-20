@@ -16,13 +16,13 @@ export const appRoutes: Route[] = [
         resolve: { leagueResolver: leagueResolver },
         pathMatch: 'full',
       },
-      {
-        path: 'leagues/:leagueId/teams/:teamId',
-        component: TeamComponent,
-        resolve: { teamResolver: teamResolver },
-        pathMatch: 'full',
-      },
     ],
+  },
+  {
+    path: 'leagues/:leagueId/teams/:teamId',
+    component: TeamComponent,
+    resolve: { teamResolver: teamResolver },
+    pathMatch: 'full',
   },
   {
     path: '**',

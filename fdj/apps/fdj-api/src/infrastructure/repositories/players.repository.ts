@@ -31,9 +31,14 @@ import { IPlayersRepository } from '../../domain/repositories-interfaces/players
  *           description: The thumbnail of the player
  *         signin:
  *           type: object
+ *           properties:
+ *             amount:
+ *               type: number
+ *             currency:
+ *               type: string
  *           description: The signin of the player
  *         born:
- *           type: date
+ *           type: string
  *           description: The birthdate of the player
  */
 
